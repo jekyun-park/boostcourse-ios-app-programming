@@ -1,0 +1,9 @@
+
+/* Class = "UINavigationItem"; title = "앨범"; ObjectID = "M93-E5-cMA"; */
+"M93-E5-cMA.title" = "앨범";
+
+/* Class = "UILabel"; text = "앨범이름"; ObjectID = "hll-BY-YhO"; */
+"hll-BY-YhO.text" = "앨범이름";
+
+/* Class = "UILabel"; text = "사진수"; ObjectID = "xb4-0M-dht"; */
+"xb4-0M-dht.text" = "사진수";
