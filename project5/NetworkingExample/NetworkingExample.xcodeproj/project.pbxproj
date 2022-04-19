@@ -14,6 +14,7 @@
 		22D995DD280958E700E02351 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22D995DC280958E700E02351 /* Assets.xcassets */; };
 		22D995E0280958E700E02351 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22D995DE280958E700E02351 /* LaunchScreen.storyboard */; };
 		22D995E828095A7800E02351 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D995E728095A7800E02351 /* Model.swift */; };
+		22D995F3280E877300E02351 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D995F2280E877300E02351 /* Request.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		22D995DF280958E700E02351 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22D995E1280958E700E02351 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		22D995E728095A7800E02351 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		22D995F2280E877300E02351 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				22D995D3280958E500E02351 /* AppDelegate.swift */,
 				22D995D5280958E500E02351 /* SceneDelegate.swift */,
 				22D995D7280958E500E02351 /* ViewController.swift */,
+				22D995F2280E877300E02351 /* Request.swift */,
 				22D995D9280958E500E02351 /* Main.storyboard */,
 				22D995E728095A7800E02351 /* Model.swift */,
 				22D995DC280958E700E02351 /* Assets.xcassets */,
@@ -143,6 +146,7 @@
 			files = (
 				22D995D8280958E500E02351 /* ViewController.swift in Sources */,
 				22D995D4280958E500E02351 /* AppDelegate.swift in Sources */,
+				22D995F3280E877300E02351 /* Request.swift in Sources */,
 				22D995D6280958E500E02351 /* SceneDelegate.swift in Sources */,
 				22D995E828095A7800E02351 /* Model.swift in Sources */,
 			);
