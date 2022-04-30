@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table Mode View Controller-->
+        <!--Movie List Table View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="TableModeViewController" customModule="BoxOffice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MovieListTableViewController" customModule="BoxOffice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,27 +21,79 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="YMz-TR-KXP">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="movieListTableViewCell" rowHeight="200" id="YMz-TR-KXP" customClass="MovieListTableViewCell" customModule="BoxOffice" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YMz-TR-KXP" id="9US-o4-zgr">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0CC-hu-Iak">
+                                                    <rect key="frame" x="10" y="5" width="126.5" height="190"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="CAF-Qj-Dk9"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="92.5" id="TUL-gt-yJz"/>
+                                                        <constraint firstAttribute="width" secondItem="0CC-hu-Iak" secondAttribute="height" multiplier="2:3" id="ngM-XK-2je"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="평점 : 6.4 예매순위 : 6 예매율 : 61.69" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UKJ-IK-ux4">
+                                                    <rect key="frame" x="141.5" y="93" width="190" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="개봉일 : 2017-07-23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Txz-pe-IxM">
+                                                    <rect key="frame" x="141.5" y="112.5" width="111" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" ambiguous="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9fd-pT-G2U">
+                                                    <rect key="frame" x="141.5" y="16" width="33.5" height="72"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJg-IM-eHT">
+                                                    <rect key="frame" x="208" y="42" width="19" height="20"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Txz-pe-IxM" firstAttribute="top" secondItem="UKJ-IK-ux4" secondAttribute="bottom" constant="5" id="0iN-nh-hml"/>
+                                                <constraint firstItem="UKJ-IK-ux4" firstAttribute="leading" secondItem="0CC-hu-Iak" secondAttribute="trailing" constant="5" id="0zp-ew-o7c"/>
+                                                <constraint firstItem="9fd-pT-G2U" firstAttribute="top" secondItem="9US-o4-zgr" secondAttribute="topMargin" constant="5" id="3mt-To-Xvn"/>
+                                                <constraint firstItem="gJg-IM-eHT" firstAttribute="leading" secondItem="9fd-pT-G2U" secondAttribute="trailing" id="5aM-lO-Gja"/>
+                                                <constraint firstItem="9fd-pT-G2U" firstAttribute="centerY" secondItem="gJg-IM-eHT" secondAttribute="centerY" id="A2k-oZ-1EK"/>
+                                                <constraint firstItem="9fd-pT-G2U" firstAttribute="leading" secondItem="0CC-hu-Iak" secondAttribute="trailing" constant="5" id="CTi-po-4WZ"/>
+                                                <constraint firstItem="UKJ-IK-ux4" firstAttribute="centerY" secondItem="9US-o4-zgr" secondAttribute="centerY" id="DUb-3M-y7L"/>
+                                                <constraint firstItem="UKJ-IK-ux4" firstAttribute="top" secondItem="9fd-pT-G2U" secondAttribute="bottom" constant="5" id="ZFX-KQ-Dgn"/>
+                                                <constraint firstItem="Txz-pe-IxM" firstAttribute="leading" secondItem="0CC-hu-Iak" secondAttribute="trailing" constant="5" id="chC-qf-uoP"/>
+                                                <constraint firstItem="0CC-hu-Iak" firstAttribute="leading" secondItem="9US-o4-zgr" secondAttribute="leading" constant="10" id="iZn-W4-jm0"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="ageImageView" destination="gJg-IM-eHT" id="tCw-fL-el9"/>
+                                            <outlet property="date" destination="Txz-pe-IxM" id="iYG-QL-8SA"/>
+                                            <outlet property="posterImageView" destination="0CC-hu-Iak" id="5RY-zg-wEp"/>
+                                            <outlet property="reservationInformation" destination="UKJ-IK-ux4" id="6yr-03-Z3t"/>
+                                            <outlet property="title" destination="9fd-pT-G2U" id="SwY-Qq-c0X"/>
                                             <segue destination="lLV-mh-Rtz" kind="show" id="rZr-e3-r4H"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="S3Q-ox-TkB"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="baf-Mk-XZc"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="nXA-5y-vUY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SHX-dr-vgZ"/>
-                            <constraint firstItem="nXA-5y-vUY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Zh8-Pq-m7a"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nXA-5y-vUY" secondAttribute="bottom" id="d9y-eV-6wD"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nXA-5y-vUY" secondAttribute="trailing" id="xdm-kt-MdX"/>
+                            <constraint firstItem="nXA-5y-vUY" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="8Ci-df-SKV"/>
+                            <constraint firstItem="nXA-5y-vUY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Y3V-LQ-jVd"/>
+                            <constraint firstItem="nXA-5y-vUY" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="eWC-oZ-5kH"/>
+                            <constraint firstItem="nXA-5y-vUY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hpU-aw-iXV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rXt-iR-hy4">
@@ -57,6 +109,9 @@
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="movieListTableView" destination="nXA-5y-vUY" id="STp-Qq-Q4Z"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -78,10 +133,10 @@
             </objects>
             <point key="canvasLocation" x="2635" y="68"/>
         </scene>
-        <!--Collection Mode View Controller-->
+        <!--Movie List Collection View Controller-->
         <scene sceneID="zpK-jP-nKt">
             <objects>
-                <viewController id="3Vq-TD-Ixc" customClass="CollectionModeViewController" customModule="BoxOffice" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3Vq-TD-Ixc" customClass="MovieListCollectionViewController" customModule="BoxOffice" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bLG-35-0iC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,6 +198,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="AgO-pQ-5qh" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4eA-aC-tgB">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" systemColor="systemIndigoColor"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

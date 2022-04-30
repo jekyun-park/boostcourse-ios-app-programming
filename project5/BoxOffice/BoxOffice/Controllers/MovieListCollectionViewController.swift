@@ -1,5 +1,5 @@
 //
-//  CollectionModeViewController.swift
+//  MovieListCollectionViewController.swift
 //  BoxOffice
 //
 //  Created by 박제균 on 2022/04/19.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CollectionModeViewController: UIViewController {
+class MovieListCollectionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

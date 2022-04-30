@@ -14,12 +14,12 @@ func requestFriends() {
 
     let session: URLSession = URLSession(configuration: .default)
 
-    
     /*
      아래의 dataTask 의 클로저는 백그라운드에서 동작할 클로저이다. 그러나 그 안에서 main 스레드에서 동작해야하는 코드는 DispatchQueue.main에 작성한다.
      클로저가 있는 새끼 스레드, 즉 백그라운드 스레드에서 노티피케이션 센터를 발송하면 백그라운드 스레드에서 ViewController.swift의
      didReceiveFriendsNotification을 호출하게 된다.
      */
+    
     let dataTask: URLSessionDataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
 
         if let error = error { print(error.localizedDescription) }
