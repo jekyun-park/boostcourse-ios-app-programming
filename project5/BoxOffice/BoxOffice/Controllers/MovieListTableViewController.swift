@@ -13,6 +13,7 @@ class MovieListTableViewController: UIViewController {
     @IBOutlet weak var movieListTableView: UITableView!
 
     var movies: [Movie] = []
+    var orderTitle: String = ""
     let cellIdentifier = "movieListTableViewCell"
 
 
@@ -22,14 +23,11 @@ class MovieListTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieListNotification(_:)), name: DidReceiveMovieListNotification, object: nil)
-//        requestMovieList(0)
-//        print(self.movies)
-        setConfigurations()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         requestMovieList(0)
-//        print(movieList)
+//        setConfigurations()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -41,15 +39,20 @@ class MovieListTableViewController: UIViewController {
 
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
+        guard let orderTypeString = notification.userInfo?["orderType"] as? String else { return }
+        print(orderTypeString)
         self.movies = movieList
+        self.orderTitle = orderTypeString
+        
         DispatchQueue.main.async {
             self.movieListTableView.reloadData()
+            self.setConfigurations()
         }
 
     }
 
     func setConfigurations() {
-        navigationItem.title = "예매율순"
+        navigationItem.title = self.orderTitle
 //        navigationController?.navigationBar.backgroundColor = .blue
     }
 

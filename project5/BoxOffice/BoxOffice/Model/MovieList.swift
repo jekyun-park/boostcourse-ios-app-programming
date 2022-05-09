@@ -7,9 +7,23 @@
 
 import Foundation
 
-struct MovieList: Codable {
+struct MovieList: Codable, CustomStringConvertible {
+    
     let orderType: Int
     let movies: [Movie]
+    var description: String {
+        switch self.orderType {
+        case 0:
+            return "예매율순"
+        case 1:
+            return "큐레이션"
+        case 2:
+            return "개봉일순"
+        default:
+            return ""
+        }
+    }
+     
 
     enum CodingKeys: String, CodingKey {
         case orderType = "order_type"

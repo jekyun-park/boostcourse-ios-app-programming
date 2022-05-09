@@ -10,23 +10,27 @@ import Foundation
 let DidReceiveMovieListNotification: Notification.Name = Notification.Name("didReceiveMovieList")
 
 func requestMovieList(_ orderType: Int) {
+
     guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=\(orderType)") else { return }
 
     let session: URLSession = URLSession(configuration: .default)
+
     let dataTask: URLSessionDataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
+
         if let error = error { print(error.localizedDescription) }
-        guard let data = data else { return }
+
+        guard let movieListData = data else { return }
 
         do {
-            let movieListResponse: MovieList = try JSONDecoder().decode(MovieList.self, from: data)
-            NotificationCenter.default.post(name: DidReceiveMovieListNotification, object: nil, userInfo: ["movieList": movieListResponse.movies])
+            let movieListResponse: MovieList = try JSONDecoder().decode(MovieList.self, from: movieListData)
+            NotificationCenter.default.post(name: DidReceiveMovieListNotification, object: nil, userInfo: ["movieList": movieListResponse.movies, "orderType": movieListResponse.description])
         } catch (let error) {
             print(error.localizedDescription)
         }
+
     }
-    
+
     dataTask.resume()
-    
 }
 
 func requestMovieDetailInformation() {
