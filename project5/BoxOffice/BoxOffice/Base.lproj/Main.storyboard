@@ -54,7 +54,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gJg-IM-eHT">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" ambiguous="YES" image="ic_12" translatesAutoresizingMaskIntoConstraints="NO" id="gJg-IM-eHT">
                                                     <rect key="frame" x="208" y="42" width="19" height="20"/>
                                                 </imageView>
                                             </subviews>
@@ -62,7 +62,7 @@
                                                 <constraint firstItem="Txz-pe-IxM" firstAttribute="top" secondItem="UKJ-IK-ux4" secondAttribute="bottom" constant="5" id="0iN-nh-hml"/>
                                                 <constraint firstItem="UKJ-IK-ux4" firstAttribute="leading" secondItem="0CC-hu-Iak" secondAttribute="trailing" constant="5" id="0zp-ew-o7c"/>
                                                 <constraint firstItem="9fd-pT-G2U" firstAttribute="top" secondItem="9US-o4-zgr" secondAttribute="topMargin" constant="5" id="3mt-To-Xvn"/>
-                                                <constraint firstItem="gJg-IM-eHT" firstAttribute="leading" secondItem="9fd-pT-G2U" secondAttribute="trailing" id="5aM-lO-Gja"/>
+                                                <constraint firstItem="gJg-IM-eHT" firstAttribute="leading" secondItem="9fd-pT-G2U" secondAttribute="trailing" constant="5" id="5aM-lO-Gja"/>
                                                 <constraint firstItem="9fd-pT-G2U" firstAttribute="centerY" secondItem="gJg-IM-eHT" secondAttribute="centerY" id="A2k-oZ-1EK"/>
                                                 <constraint firstItem="9fd-pT-G2U" firstAttribute="leading" secondItem="0CC-hu-Iak" secondAttribute="trailing" constant="5" id="CTi-po-4WZ"/>
                                                 <constraint firstItem="UKJ-IK-ux4" firstAttribute="centerY" secondItem="9US-o4-zgr" secondAttribute="centerY" id="DUb-3M-y7L"/>
@@ -284,6 +284,7 @@
         <segue reference="rZr-e3-r4H"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="ic_12" width="20" height="20"/>
         <image name="ic_collection" width="25" height="25"/>
         <image name="ic_list" width="24" height="24"/>
         <image name="ic_settings" width="24" height="24"/>

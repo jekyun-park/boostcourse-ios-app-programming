@@ -18,8 +18,8 @@ struct MovieList: Codable {
 
 }
 
-struct Movie: Codable {
-
+struct Movie: Codable, CustomStringConvertible {
+    
     let grade: Int
     let thumb: String
     let reservationGrade: Int
@@ -28,6 +28,20 @@ struct Movie: Codable {
     let userRating: Double
     let date: String
     let movieId: String
+    var description: String {
+        switch self.grade {
+        case 0:
+            return "ic_allages"
+        case 12:
+            return "ic_12"
+        case 15:
+            return "ic_15"
+        case 19:
+            return "ic_19"
+        default:
+            return ""
+        }
+    }
 
     enum CodingKeys: String, CodingKey {
         case grade
@@ -38,9 +52,8 @@ struct Movie: Codable {
         case userRating = "user_rating"
         case date
         case movieId = "id"
-
     }
-    
+
 }
 
 

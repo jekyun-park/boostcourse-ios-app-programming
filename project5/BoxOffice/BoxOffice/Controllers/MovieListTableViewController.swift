@@ -15,13 +15,6 @@ class MovieListTableViewController: UIViewController {
     var movies: [Movie] = []
     let cellIdentifier = "movieListTableViewCell"
 
-    enum Age:Int {
-        case allAges = 0
-        case twelve = 12
-        case fifteen = 15
-        case nineteen = 19
-    }
-
 
 
     // MARK: - Life Cycle
@@ -56,9 +49,8 @@ class MovieListTableViewController: UIViewController {
     }
 
     func setConfigurations() {
-//        navigationItem.title = "예매율순"
-
-//        navi
+        navigationItem.title = "예매율순"
+//        navigationController?.navigationBar.backgroundColor = .blue
     }
 
 
@@ -89,8 +81,7 @@ extension MovieListTableViewController: UITableViewDelegate, UITableViewDataSour
                 guard let index: IndexPath = self.movieListTableView.indexPath(for: movieListTableViewCell) else { return }
                 if index.row == indexPath.row {
                     movieListTableViewCell.posterImageView.image = UIImage(data: posterImageData)
-//                    movieListTableViewCell.setNeedsLayout()
-//                    movieListTableViewCell.layoutIfNeeded()
+                    movieListTableViewCell.ageImageView.image = UIImage(named: movie.description)
                 }
             }
         }
