@@ -27,12 +27,13 @@ class MovieListTableViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         requestMovieList(0)
-//        setConfigurations()
     }
 
     override func viewDidAppear(_ animated: Bool) {
-//        requestMovieList(0)
-//        print(self.movies)
+        
+        // printing logs
+//         requestMovieList(0)
+//         print(self.movies)
     }
 
     // MARK: - IBActions, Methods
@@ -40,20 +41,15 @@ class MovieListTableViewController: UIViewController {
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
         guard let orderTypeString = notification.userInfo?["orderType"] as? String else { return }
-        print(orderTypeString)
+        
         self.movies = movieList
         self.orderTitle = orderTypeString
         
         DispatchQueue.main.async {
             self.movieListTableView.reloadData()
-            self.setConfigurations()
+            self.navigationItem.title = self.orderTitle
         }
 
-    }
-
-    func setConfigurations() {
-        navigationItem.title = self.orderTitle
-//        navigationController?.navigationBar.backgroundColor = .blue
     }
 
 

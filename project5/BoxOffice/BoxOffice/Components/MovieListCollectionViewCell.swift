@@ -9,4 +9,11 @@ import UIKit
 
 class MovieListCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var ageImageView: UIImageView!
+    @IBOutlet weak var reservationInformation: UILabel!
+    @IBOutlet weak var date: UILabel!
+    
+    
 }

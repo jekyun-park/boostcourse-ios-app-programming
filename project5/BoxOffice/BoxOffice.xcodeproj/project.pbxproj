@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2228795328184845002E338A /* MovieListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228795228184845002E338A /* MovieListTableViewCell.swift */; };
+		22AA008C282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA008B282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift */; };
 		22D99601280E939B00E02351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D99600280E939B00E02351 /* AppDelegate.swift */; };
 		22D99603280E939B00E02351 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D99602280E939B00E02351 /* SceneDelegate.swift */; };
 		22D99605280E939B00E02351 /* MovieListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D99604280E939B00E02351 /* MovieListTableViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		2228795228184845002E338A /* MovieListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTableViewCell.swift; sourceTree = "<group>"; };
+		22AA008B282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewCell.swift; sourceTree = "<group>"; };
 		22D995FD280E939B00E02351 /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D99600280E939B00E02351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22D99602280E939B00E02351 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				2228795228184845002E338A /* MovieListTableViewCell.swift */,
+				22AA008B282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22D99605280E939B00E02351 /* MovieListTableViewController.swift in Sources */,
+				22AA008C282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift in Sources */,
 				22D99626280FD89600E02351 /* Comments.swift in Sources */,
 				22D99615280EF6A500E02351 /* MovieListCollectionViewController.swift in Sources */,
 				22D99618280EF6FA00E02351 /* MovieInformationViewController.swift in Sources */,
