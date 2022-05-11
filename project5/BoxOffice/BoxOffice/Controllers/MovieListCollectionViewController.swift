@@ -26,7 +26,11 @@ class MovieListCollectionViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        requestMovieList(0)
+        if let orderType = UserInformation.shared.orderType {
+            requestMovieList(orderType)
+        } else {
+            requestMovieList(0)
+        }
     }
 
 

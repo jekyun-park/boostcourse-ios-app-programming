@@ -11,10 +11,12 @@ class MovieListTableViewController: UIViewController {
 
     // MARK: - IBOutlets & Variables & Constants
     @IBOutlet weak var movieListTableView: UITableView!
+    @IBOutlet weak var orderBarButtonItem: UIBarButtonItem!
 
     var movies: [Movie] = []
     var orderTitle: String = ""
     let cellIdentifier = "movieListTableViewCell"
+
 
 
 
@@ -26,11 +28,14 @@ class MovieListTableViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        requestMovieList(0)
+        if let orderType = UserInformation.shared.orderType {
+            requestMovieList(orderType)
+        } else {
+            requestMovieList(0)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        
         // printing logs
 //         requestMovieList(0)
 //         print(self.movies)
@@ -38,19 +43,47 @@ class MovieListTableViewController: UIViewController {
 
     // MARK: - IBActions, Methods
 
+    func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
+        let handler = { (action: UIAlertAction) in
+            requestMovieList(orderType)
+            UserInformation.shared.orderType = orderType
+            DispatchQueue.main.async {
+                self.movieListTableView.reloadData()
+            }
+        }
+        return handler
+    }
+
+
+    @IBAction func showAlertController() {
+        let orderAlertController: UIAlertController
+
+        orderAlertController = UIAlertController(title: "정렬방식 선택", message: "영화를 어떤 순서로 정렬할까요?", preferredStyle: UIAlertController.Style.actionSheet)
+
+        orderAlertController.addAction(UIAlertAction(title: "예매율", style: UIAlertAction.Style.default,handler: handleRequests(0)))
+        orderAlertController.addAction(UIAlertAction(title: "큐레이션", style: UIAlertAction.Style.default,handler: handleRequests(1)))
+        orderAlertController.addAction(UIAlertAction(title: "개봉일", style: UIAlertAction.Style.default,handler: handleRequests(2)))
+        orderAlertController.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel))
+
+
+
+        self.present(orderAlertController, animated: true, completion: nil)
+    }
+
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
         guard let orderTypeString = notification.userInfo?["orderType"] as? String else { return }
-        
+
         self.movies = movieList
         self.orderTitle = orderTypeString
-        
+
         DispatchQueue.main.async {
             self.movieListTableView.reloadData()
             self.navigationItem.title = self.orderTitle
         }
 
     }
+
 
 
 }
