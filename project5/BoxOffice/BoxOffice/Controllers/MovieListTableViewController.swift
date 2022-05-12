@@ -18,8 +18,6 @@ class MovieListTableViewController: UIViewController {
     let cellIdentifier = "movieListTableViewCell"
 
 
-
-
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -29,7 +27,6 @@ class MovieListTableViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         requestMovieList(UserInformation.shared.orderType)
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -79,9 +76,18 @@ class MovieListTableViewController: UIViewController {
 
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let movieInformationViewController = segue.destination as? MovieInformationViewController else { return }
+        guard let movieListTableViewCell = sender as? MovieListTableViewCell else { return }
+        guard let index = movieListTableView.indexPath(for: movieListTableViewCell) else { return }
+        movieInformationViewController.movieId = movies[index.row].movieId
+    }
+
 
 
 }
+
+// MARK: - Table View
 
 extension MovieListTableViewController: UITableViewDelegate, UITableViewDataSource {
 

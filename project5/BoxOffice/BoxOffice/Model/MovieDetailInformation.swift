@@ -11,7 +11,7 @@ struct MovieDetailResponse {
     let results: [MovieDetailInformation]
 }
 
-struct MovieDetailInformation {
+struct MovieDetailInformation: Codable {
 
     let audience: Int
     let actor: String
@@ -27,6 +27,21 @@ struct MovieDetailInformation {
     let userRating: Double
     let date: String
     let movieId: String
+
+    var ageIconString: String {
+        switch self.grade {
+        case 0:
+            return "ic_allages"
+        case 12:
+            return "ic_12"
+        case 15:
+            return "ic_15"
+        case 19:
+            return "ic_19"
+        default:
+            return ""
+        }
+    }
 
     enum CodingKeys: String, CodingKey {
         case audience
@@ -44,5 +59,5 @@ struct MovieDetailInformation {
         case date
         case movieId = "id"
     }
-    
+
 }

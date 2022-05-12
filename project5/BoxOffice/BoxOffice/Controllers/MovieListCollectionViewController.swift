@@ -70,6 +70,13 @@ class MovieListCollectionViewController: UIViewController {
             self.navigationItem.title = self.orderTitle
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let movieInformationViewController = segue.destination as? MovieInformationViewController else { return }
+        guard let movieListCollectionViewCell = sender as? MovieListCollectionViewCell else { return }
+        guard let index = movieListCollectionView.indexPath(for: movieListCollectionViewCell) else { return }
+        movieInformationViewController.movieId = movies[index.row].movieId
+    }
 }
 
 // MARK: - Collection View
@@ -83,7 +90,7 @@ extension MovieListCollectionViewController: UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let movieListCollectionViewCell: MovieListCollectionViewCell = movieListCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MovieListCollectionViewCell else { return UICollectionViewCell() }
-
+        
         let movie = self.movies[indexPath.item]
         
         movieListCollectionViewCell.date.text = "개봉일 : " + movie.date
