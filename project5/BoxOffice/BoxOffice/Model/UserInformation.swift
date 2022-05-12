@@ -9,7 +9,7 @@ import Foundation
 
 class UserInformation {
     static let shared: UserInformation = UserInformation()
-
     var nickName: String?
-    var orderType: Int? = 0
+    // default:0
+    var orderType: Int = 0
 }

@@ -9,16 +9,17 @@ import UIKit
 
 class MovieListCollectionViewController: UIViewController {
 
-    // MARK: - IBOutlets & Variables & Constants
+// MARK: - IBOutlets & Variables & Constants
+
     @IBOutlet weak var movieListCollectionView: UICollectionView!
+    @IBOutlet weak var orderBarButtonItem: UIBarButtonItem!
+
     var movies: [Movie] = []
     var orderTitle = ""
     let cellIdentifier = "movieListCollectionViewCell"
 
 
-
-
-    // MARK: - Life Cycle
+// MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,20 +27,41 @@ class MovieListCollectionViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if let orderType = UserInformation.shared.orderType {
-            requestMovieList(orderType)
-        } else {
-            requestMovieList(0)
-        }
+        requestMovieList(UserInformation.shared.orderType)
     }
 
 
-    // MARK: - IBActions & Methods
+// MARK: - IBActions & Methods
+
+    func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
+        let handler = { (action: UIAlertAction) in
+            requestMovieList(orderType)
+            UserInformation.shared.orderType = orderType
+            DispatchQueue.main.async {
+                self.movieListCollectionView.reloadData()
+            }
+        }
+        return handler
+    }
+
+    @IBAction func showAlertController() {
+        let orderAlertController: UIAlertController
+
+        orderAlertController = UIAlertController(title: "정렬방식 선택", message: "영화를 어떤 순서로 정렬할까요?", preferredStyle: UIAlertController.Style.actionSheet)
+
+        orderAlertController.addAction(UIAlertAction(title: "예매율", style: UIAlertAction.Style.default, handler: handleRequests(0)))
+        orderAlertController.addAction(UIAlertAction(title: "큐레이션", style: UIAlertAction.Style.default, handler: handleRequests(1)))
+        orderAlertController.addAction(UIAlertAction(title: "개봉일", style: UIAlertAction.Style.default, handler: handleRequests(2)))
+        orderAlertController.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel))
+
+        self.present(orderAlertController, animated: true, completion: nil)
+    }
+
 
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
         guard let orderTypeString = notification.userInfo?["orderType"] as? String else { return }
-        
+
         self.movies = movieList
         self.orderTitle = orderTypeString
 
@@ -47,12 +69,7 @@ class MovieListCollectionViewController: UIViewController {
             self.movieListCollectionView.reloadData()
             self.navigationItem.title = self.orderTitle
         }
-
     }
-
-
-
-
 }
 
 // MARK: - Collection View
@@ -68,10 +85,15 @@ extension MovieListCollectionViewController: UICollectionViewDelegate, UICollect
         guard let movieListCollectionViewCell: MovieListCollectionViewCell = movieListCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MovieListCollectionViewCell else { return UICollectionViewCell() }
 
         let movie = self.movies[indexPath.item]
-
+        
         movieListCollectionViewCell.date.text = "개봉일 : " + movie.date
+        
         movieListCollectionViewCell.title.text = movie.title
+        movieListCollectionViewCell.title.adjustsFontSizeToFitWidth = true
+        movieListCollectionViewCell.title.preferredMaxLayoutWidth = UIScreen.main.bounds.width
         movieListCollectionViewCell.title.sizeToFit()
+        movieListCollectionViewCell.title.layoutIfNeeded()
+        
         movieListCollectionViewCell.reservationInformation.text = "\(movie.reservationGrade)위(\(movie.userRating)) / \(movie.reservationRate)%"
         movieListCollectionViewCell.posterImageView.image = nil
         movieListCollectionViewCell.ageImageView.image = nil
@@ -93,15 +115,18 @@ extension MovieListCollectionViewController: UICollectionViewDelegate, UICollect
 
 }
 
+
+// MARK: - Collection View Layout
+
 extension MovieListCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         guard let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout else { return CGSize() }
-        
+
         let numberOfCells: CGFloat = 2
-        
-        let width: CGFloat = collectionView.frame.size.width - (flowLayout.minimumLineSpacing * (numberOfCells - 1))
-        
-        return CGSize(width: CGFloat(Int(width/numberOfCells)), height: CGFloat(Int(width*0.9)) )
+
+        let width: CGFloat = collectionView.frame.size.width - (flowLayout.minimumLineSpacing)
+
+        return CGSize(width: CGFloat(Int(width / numberOfCells)), height: CGFloat(Int(width * 0.9)))
     }
 }

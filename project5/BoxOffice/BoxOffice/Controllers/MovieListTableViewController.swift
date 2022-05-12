@@ -28,11 +28,8 @@ class MovieListTableViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if let orderType = UserInformation.shared.orderType {
-            requestMovieList(orderType)
-        } else {
-            requestMovieList(0)
-        }
+        requestMovieList(UserInformation.shared.orderType)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -60,12 +57,10 @@ class MovieListTableViewController: UIViewController {
 
         orderAlertController = UIAlertController(title: "정렬방식 선택", message: "영화를 어떤 순서로 정렬할까요?", preferredStyle: UIAlertController.Style.actionSheet)
 
-        orderAlertController.addAction(UIAlertAction(title: "예매율", style: UIAlertAction.Style.default,handler: handleRequests(0)))
-        orderAlertController.addAction(UIAlertAction(title: "큐레이션", style: UIAlertAction.Style.default,handler: handleRequests(1)))
-        orderAlertController.addAction(UIAlertAction(title: "개봉일", style: UIAlertAction.Style.default,handler: handleRequests(2)))
+        orderAlertController.addAction(UIAlertAction(title: "예매율", style: UIAlertAction.Style.default, handler: handleRequests(0)))
+        orderAlertController.addAction(UIAlertAction(title: "큐레이션", style: UIAlertAction.Style.default, handler: handleRequests(1)))
+        orderAlertController.addAction(UIAlertAction(title: "개봉일", style: UIAlertAction.Style.default, handler: handleRequests(2)))
         orderAlertController.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel))
-
-
 
         self.present(orderAlertController, animated: true, completion: nil)
     }

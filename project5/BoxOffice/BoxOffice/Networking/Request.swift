@@ -33,7 +33,7 @@ func requestMovieList(_ orderType: Int) {
     dataTask.resume()
 }
 
-func requestMovieDetailInformation() {
+func requestMovieDetailInformation(_ id:String) {
     /*
         해당 영화의 id가 있어야함
      */
