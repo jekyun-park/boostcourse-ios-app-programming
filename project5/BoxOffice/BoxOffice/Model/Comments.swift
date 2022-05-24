@@ -7,25 +7,28 @@
 
 import Foundation
 
-struct CommentsResponse: Codable {
+struct Comments: Codable {
     let comments: [Comment]
 
-    struct Comment: Codable {
-        let rating: Double
-        let timestamp: Double
-        let writer: String
-        let movieId: String
-        let contents: String
-        let commentId: String
-
-        enum CodingKeys: String, CodingKey {
-            case rating
-            case timestamp
-            case writer
-            case movieId = "movie_id"
-            case contents
-            case commentId = "id"
-        }
+    enum CodingKeys: String, CodingKey {
+        case comments
     }
+}
 
+struct Comment: Codable {
+    let rating: Double
+    let timestamp: Double
+    let writer: String
+    let movieId: String
+    let contents: String
+    let commentId: String
+
+    enum CodingKeys: String, CodingKey {
+        case rating
+        case timestamp
+        case writer
+        case movieId = "movie_id"
+        case contents
+        case commentId = "id"
+    }
 }

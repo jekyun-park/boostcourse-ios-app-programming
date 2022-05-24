@@ -2,17 +2,13 @@
 //  MovieReviewCell.swift
 //  BoxOffice
 //
-//  Created by 박제균 on 2022/05/12.
+//  Created by 박제균 on 2022/05/24.
 //
 
 import UIKit
 
 class MovieReviewCell: UITableViewCell {
-
-    @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var writeButton: UIButton!
-    @IBOutlet weak var userId: UILabel!
-    @IBOutlet weak var date: UILabel!
-    @IBOutlet weak var reviewText: UILabel!
-
+    @IBOutlet weak var writer: UILabel!
+    @IBOutlet weak var time: UILabel!
+    @IBOutlet weak var contents: UILabel!
 }

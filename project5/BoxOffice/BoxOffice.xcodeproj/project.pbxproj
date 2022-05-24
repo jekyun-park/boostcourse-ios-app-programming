@@ -11,7 +11,8 @@
 		224EB9B5282CF71700A88832 /* MovieInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9B4282CF71700A88832 /* MovieInformationCell.swift */; };
 		224EB9B7282CF74000A88832 /* MovieCastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9B6282CF74000A88832 /* MovieCastCell.swift */; };
 		224EB9B9282CF75C00A88832 /* MovieSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9B8282CF75C00A88832 /* MovieSummaryCell.swift */; };
-		224EB9BB282CF76900A88832 /* MovieReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9BA282CF76900A88832 /* MovieReviewCell.swift */; };
+		224EB9BB282CF76900A88832 /* ReviewLabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9BA282CF76900A88832 /* ReviewLabelCell.swift */; };
+		226B7293283CA9680060F930 /* MovieReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B7292283CA9680060F930 /* MovieReviewCell.swift */; };
 		22AA008C282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA008B282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift */; };
 		22AA008E282B9C8C00CD9DC6 /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AA008D282B9C8C00CD9DC6 /* UserInformation.swift */; };
 		22D99601280E939B00E02351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D99600280E939B00E02351 /* AppDelegate.swift */; };
@@ -34,7 +35,8 @@
 		224EB9B4282CF71700A88832 /* MovieInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInformationCell.swift; sourceTree = "<group>"; };
 		224EB9B6282CF74000A88832 /* MovieCastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCastCell.swift; sourceTree = "<group>"; };
 		224EB9B8282CF75C00A88832 /* MovieSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSummaryCell.swift; sourceTree = "<group>"; };
-		224EB9BA282CF76900A88832 /* MovieReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieReviewCell.swift; sourceTree = "<group>"; };
+		224EB9BA282CF76900A88832 /* ReviewLabelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewLabelCell.swift; sourceTree = "<group>"; };
+		226B7292283CA9680060F930 /* MovieReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieReviewCell.swift; sourceTree = "<group>"; };
 		22AA008B282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCollectionViewCell.swift; sourceTree = "<group>"; };
 		22AA008D282B9C8C00CD9DC6 /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		22D995FD280E939B00E02351 /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +83,8 @@
 				224EB9B4282CF71700A88832 /* MovieInformationCell.swift */,
 				224EB9B6282CF74000A88832 /* MovieCastCell.swift */,
 				224EB9B8282CF75C00A88832 /* MovieSummaryCell.swift */,
-				224EB9BA282CF76900A88832 /* MovieReviewCell.swift */,
+				224EB9BA282CF76900A88832 /* ReviewLabelCell.swift */,
+				226B7292283CA9680060F930 /* MovieReviewCell.swift */,
 			);
 			path = MovieDetailInformationCells;
 			sourceTree = "<group>";
@@ -230,8 +233,9 @@
 			files = (
 				224EB9B7282CF74000A88832 /* MovieCastCell.swift in Sources */,
 				22D99605280E939B00E02351 /* MovieListTableViewController.swift in Sources */,
-				224EB9BB282CF76900A88832 /* MovieReviewCell.swift in Sources */,
+				224EB9BB282CF76900A88832 /* ReviewLabelCell.swift in Sources */,
 				22AA008C282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift in Sources */,
+				226B7293283CA9680060F930 /* MovieReviewCell.swift in Sources */,
 				22D99626280FD89600E02351 /* Comments.swift in Sources */,
 				22D99615280EF6A500E02351 /* MovieListCollectionViewController.swift in Sources */,
 				22D99618280EF6FA00E02351 /* MovieInformationViewController.swift in Sources */,
