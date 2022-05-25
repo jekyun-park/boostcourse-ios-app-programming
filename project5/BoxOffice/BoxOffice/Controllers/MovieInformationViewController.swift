@@ -36,9 +36,12 @@ class MovieInformationViewController: UIViewController {
     }
 
 // MARK: - functions & Methods
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        guard let writeCommentViewController = segue.destination as? WriteCommentViewController else { return }
+        writeCommentViewController.movieTitleString = self.movieDetailInformation.title
+        writeCommentViewController.ageIconString = self.movieDetailInformation.ageIconString
+
     }
 
     @objc func didReceiveMovieDetailInformationNotification(_ notification: Notification) {
@@ -52,19 +55,19 @@ class MovieInformationViewController: UIViewController {
             guard let navigationBarBackItem = self.navigationController?.navigationBar.backItem else { return }
             navigationBarTopItem.title = movieDetailInformation.title
             navigationBarBackItem.title = "영화목록"
-            
+
         }
     }
-    
-    @objc func didReceiveMovieComments(_ notification:Notification) {
-        
+
+    @objc func didReceiveMovieComments(_ notification: Notification) {
+
         guard let movieComments: Comments = notification.userInfo?["comments"] as? Comments else { return }
-        
+
         self.comments = movieComments.comments
         DispatchQueue.main.async {
             self.movieInformationTableView.reloadData()
         }
-        
+
     }
 
 
@@ -75,7 +78,7 @@ class MovieInformationViewController: UIViewController {
 extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4+comments.count
+        return 4 + comments.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,7 +144,7 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
             return movieSummaryCell
         case 2:
             guard let movieCastCell: MovieCastCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "movieCastCell") as? MovieCastCell else { return UITableViewCell() }
-            
+
             DispatchQueue.main.async {
                 guard let index: IndexPath = self.movieInformationTableView.indexPath(for: movieCastCell) else { return }
                 if index.row == indexPath.row {
@@ -151,35 +154,35 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
 //                    movieCastCell.actorLabel.sizeToFit()
                 }
             }
-            
+
             return movieCastCell
         case 3:
             guard let reviewLabelCell: ReviewLabelCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "reviewLabelCell") as? ReviewLabelCell else { return UITableViewCell() }
             return reviewLabelCell
-            
+
         default:
-            
+
             guard let movieReviewCell: MovieReviewCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "movieReviewCell") as? MovieReviewCell else { return UITableViewCell() }
-            
+
             DispatchQueue.main.async {
-                guard let index:IndexPath = self.movieInformationTableView.indexPath(for: movieReviewCell) else { return }
+                guard let index: IndexPath = self.movieInformationTableView.indexPath(for: movieReviewCell) else { return }
                 if index.row == indexPath.row {
-                    movieReviewCell.writer.text = self.comments[indexPath.row-4].writer
+                    movieReviewCell.writer.text = self.comments[indexPath.row - 4].writer
                     movieReviewCell.writer.sizeToFit()
-                    
+
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let date = Date(timeIntervalSince1970: self.comments[indexPath.row-4].timestamp)
+                    let date = Date(timeIntervalSince1970: self.comments[indexPath.row - 4].timestamp)
                     movieReviewCell.time.text = dateFormatter.string(from: date)
-                    movieReviewCell.contents.text = self.comments[indexPath.row-4].contents
-                    
+                    movieReviewCell.contents.text = self.comments[indexPath.row - 4].contents
+
                     for tag in 1...5 {
-                        
+
                         if let starImage = movieReviewCell.viewWithTag(tag) as? UIImageView {
-                            if tag <= Int(floor(self.comments[indexPath.row-4].rating)) / 2 {
+                            if tag <= Int(floor(self.comments[indexPath.row - 4].rating)) / 2 {
                                 starImage.image = UIImage(named: "ic_star_large_full")
                             } else {
-                                if (2 * tag - Int(floor(self.comments[indexPath.row-4].rating))) <= 1 {
+                                if (2 * tag - Int(floor(self.comments[indexPath.row - 4].rating))) <= 1 {
                                     starImage.image = UIImage(named: "ic_star_large_half")
                                 } else {
                                     starImage.image = UIImage(named: "ic_star_large")
@@ -187,11 +190,11 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
                             }
                         }
                     }
-                    
+
                 }
             }
-            
-            
+
+
             return movieReviewCell
         }
     }
