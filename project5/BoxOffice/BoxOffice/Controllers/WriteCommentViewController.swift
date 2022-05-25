@@ -15,6 +15,7 @@ class WriteCommentViewController: UIViewController {
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieAgeIcon: UIImageView!
     @IBOutlet weak var rating: UILabel!
+    @IBOutlet weak var contentTextView: UITextView!
 
 
     var movieTitleString: String = ""
@@ -27,6 +28,7 @@ class WriteCommentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadTitleAndAgeGrade()
+        setContentTextViewBorder()
     }
 
 
@@ -37,8 +39,19 @@ class WriteCommentViewController: UIViewController {
         self.movieTitle.text = movieTitleString
         self.movieAgeIcon.image = UIImage(named: "\(ageIconString)")
     }
+    
+    func setContentTextViewBorder() {
+        let contentTextViewBorderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
+        contentTextView.layer.borderColor = contentTextViewBorderColor
+        contentTextView.layer.borderWidth = 1.0
+        contentTextView.layer.cornerRadius = 5
+    }
 
     @IBAction func touchUpCancelButton (_ sender: UIButton) {
+        self.dismiss(animated: true)
+    }
+    
+    @IBAction func touchUpCompleteButton( _ sender: UIButton) {
         self.dismiss(animated: true)
     }
 
