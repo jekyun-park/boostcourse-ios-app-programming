@@ -15,12 +15,11 @@ class WriteCommentViewController: UIViewController {
     @IBOutlet weak var movieTitle: UILabel!
     @IBOutlet weak var movieAgeIcon: UIImageView!
     @IBOutlet weak var rating: UILabel!
+    @IBOutlet weak var starRatingSlider: UISlider!
+    @IBOutlet weak var nickNameTextField: UITextField!
     @IBOutlet weak var contentTextView: UITextView!
 
-
-    var movieTitleString: String = ""
-    var ageIconString: String = ""
-
+    var movieDetailInformation: MovieDetailInformation!
 
 
 
@@ -29,6 +28,7 @@ class WriteCommentViewController: UIViewController {
         super.viewDidLoad()
         loadTitleAndAgeGrade()
         setContentTextViewBorder()
+        setNickNameTextField()
     }
 
 
@@ -36,10 +36,10 @@ class WriteCommentViewController: UIViewController {
 // MARK: - IBActions & Functions & Methods
 
     func loadTitleAndAgeGrade() {
-        self.movieTitle.text = movieTitleString
-        self.movieAgeIcon.image = UIImage(named: "\(ageIconString)")
+        self.movieTitle.text = movieDetailInformation.title
+        self.movieAgeIcon.image = UIImage(named: "\(movieDetailInformation.ageIconString)")
     }
-    
+
     func setContentTextViewBorder() {
         let contentTextViewBorderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
         contentTextView.layer.borderColor = contentTextViewBorderColor
@@ -47,11 +47,32 @@ class WriteCommentViewController: UIViewController {
         contentTextView.layer.cornerRadius = 5
     }
 
+    func setNickNameTextField() {
+        if UserInformation.shared.nickName != nil {
+            nickNameTextField.text = UserInformation.shared.nickName
+        }
+    }
+
+    func contentTextViewSetupView() {
+        if contentTextView.text == "한줄평을 작성해주세요" {
+            contentTextView.text = ""
+            contentTextView.textColor = UIColor.black
+        } else if contentTextView.text == "" {
+            contentTextView.text = "한줄평을 작성해주세요"
+            contentTextView.textColor = UIColor.lightGray
+        }
+    }
+
     @IBAction func touchUpCancelButton (_ sender: UIButton) {
         self.dismiss(animated: true)
     }
-    
-    @IBAction func touchUpCompleteButton( _ sender: UIButton) {
+
+    @IBAction func touchUpCompleteButton(_ sender: UIButton) {
+        let rating = Double(starRatingSlider.value)
+        guard let writer = nickNameTextField.text else { return }
+        let movieId = movieDetailInformation.movieId
+        guard let contents = contentTextView.text else { return }
+        requestPostComment(rating: rating, writer: writer, movieId: movieId, contents: contents)
         self.dismiss(animated: true)
     }
 
@@ -78,3 +99,22 @@ class WriteCommentViewController: UIViewController {
 }
 
 
+extension WriteCommentViewController: UITextViewDelegate {
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        contentTextViewSetupView()
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if contentTextView.text == "" {
+            contentTextViewSetupView()
+        }
+    }
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if contentTextView.text == "\n" {
+            contentTextView.resignFirstResponder()
+        }
+        return true
+    }
+}

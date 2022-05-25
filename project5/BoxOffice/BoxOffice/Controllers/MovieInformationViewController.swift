@@ -39,9 +39,7 @@ class MovieInformationViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let writeCommentViewController = segue.destination as? WriteCommentViewController else { return }
-        writeCommentViewController.movieTitleString = self.movieDetailInformation.title
-        writeCommentViewController.ageIconString = self.movieDetailInformation.ageIconString
-
+        writeCommentViewController.movieDetailInformation = self.movieDetailInformation
     }
 
     @objc func didReceiveMovieDetailInformationNotification(_ notification: Notification) {

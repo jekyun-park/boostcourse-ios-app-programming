@@ -848,6 +848,9 @@
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="완료"/>
+                                <connections>
+                                    <action selector="touchUpCompleteButton:" destination="5r2-je-x6s" eventType="touchUpInside" id="xfH-MR-2GC"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="한줄평 작성" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MX2-v7-Djg">
                                 <rect key="frame" x="168" y="49.333333333333336" width="78" height="20.333333333333336"/>
@@ -912,10 +915,10 @@
                                     <action selector="onDragStarRatingSlider:" destination="5r2-je-x6s" eventType="valueChanged" id="KeP-aG-b4T"/>
                                 </connections>
                             </slider>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="C8M-gL-02d">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" text="한줄평을 작성해주세요" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="C8M-gL-02d">
                                 <rect key="frame" x="5" y="629" width="404" height="128"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <connections>
@@ -971,7 +974,9 @@
                         <outlet property="contentTextView" destination="C8M-gL-02d" id="KUA-mh-R9E"/>
                         <outlet property="movieAgeIcon" destination="6e2-XY-hz1" id="ymh-13-dQS"/>
                         <outlet property="movieTitle" destination="uWl-wR-zV0" id="7Az-mX-e0a"/>
+                        <outlet property="nickNameTextField" destination="5re-SW-Fic" id="5Uq-EY-SVK"/>
                         <outlet property="rating" destination="kb1-c0-udd" id="ecy-vQ-leh"/>
+                        <outlet property="starRatingSlider" destination="RUV-wa-4Yc" id="uFX-aL-7eh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wDJ-Wz-YaG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1042,9 +1047,6 @@
         <image name="ic_settings" width="24" height="24"/>
         <image name="ic_star_large" width="48" height="48"/>
         <image name="ic_user_loading" width="36" height="36"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

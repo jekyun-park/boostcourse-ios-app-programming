@@ -80,11 +80,35 @@ func requestMovieCommentsList(_ movieId: String) {
 
 }
 
-func requestPostComment() {
+func requestPostComment(rating: Double, writer: String, movieId: String, contents: String) {
     /*
         한줄평 등록하기
         해당 영화 id, 별점, 내용, 글쓴이를 묶어서 json 형식으로 Post
      */
+
+    let comment = PostComment(rating: rating, writer: writer, movieId: movieId, contents: contents)
+
+    let session: URLSession = URLSession(configuration: .default)
+
+    guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/comment") else { return }
+
+    guard let dataToUpload = try? JSONEncoder().encode(comment) else { return }
+
+    var postRequest = URLRequest(url: url)
+    postRequest.httpMethod = "POST"
+    postRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+    let uploadTask = session.uploadTask(with: postRequest, from: dataToUpload) { (data: Data?, response: URLResponse?, error: Error?) in
+
+        if let error = error {
+            print(error.localizedDescription)
+            return
+        } else {
+            print("POST Complete")
+        }
+    }
+
+    uploadTask.resume()
 }
 
 

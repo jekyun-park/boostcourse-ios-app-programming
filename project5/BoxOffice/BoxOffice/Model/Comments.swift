@@ -32,3 +32,16 @@ struct Comment: Codable {
         case commentId = "id"
     }
 }
+
+struct PostComment: Codable {
+    let rating: Double
+    let writer: String
+    let movieId: String
+    let contents: String
+
+    enum CodingKeys: String, CodingKey {
+        case rating, writer, contents
+        case movieId = "movie_id"
+    }
+
+}
