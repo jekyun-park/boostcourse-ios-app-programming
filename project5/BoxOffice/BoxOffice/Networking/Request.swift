@@ -92,7 +92,7 @@ func requestPostComment(rating: Double, writer: String, movieId: String, content
 
     guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/comment") else { return }
 
-    guard let dataToUpload = try? JSONEncoder().encode(comment) else { return }
+    guard let dataToUpload = try? JSONEncoder().encode(comment) else { print("Encoding failed"); return }
 
     var postRequest = URLRequest(url: url)
     postRequest.httpMethod = "POST"
@@ -104,7 +104,10 @@ func requestPostComment(rating: Double, writer: String, movieId: String, content
             print(error.localizedDescription)
             return
         } else {
-            print("POST Complete")
+            if let _ = response {
+                // print("POST Complete")
+                UserInformation.shared.nickName = writer
+            }
         }
     }
 

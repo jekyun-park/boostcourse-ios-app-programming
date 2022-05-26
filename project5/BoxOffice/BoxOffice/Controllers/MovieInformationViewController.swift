@@ -112,8 +112,8 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
                         movieInformationCell.numberOfAudience.text = formatter.string(from: NSNumber(value: movieDetailInformation.audience))
 
                         // star rating
-                        for tag in 1...5 {
-                            if let starImage = self.view.viewWithTag(tag) as? UIImageView {
+                        for tag in 0...5 {
+                            if let starImage = movieInformationCell.viewWithTag(tag) as? UIImageView {
                                 if tag <= Int(floor(movieDetailInformation.userRating)) / 2 {
                                     starImage.image = UIImage(named: "ic_star_large_full")
                                 } else {
@@ -148,8 +148,10 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
                 if index.row == indexPath.row {
                     movieCastCell.directorLabel.text = movieDetailInformation.director
                     movieCastCell.actorLabel.text = movieDetailInformation.actor
-//                    movieCastCell.directorLabel.sizeToFit()
-//                    movieCastCell.actorLabel.sizeToFit()
+
+//                    movieCastCell.actorLabel.frame.size.width = movieCastCell.actorLabel.intrinsicContentSize.width
+//                    movieCastCell.actorLabel.frame.size.height = movieCastCell.actorLabel.intrinsicContentSize.height
+
                 }
             }
 
@@ -195,6 +197,10 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
 
             return movieReviewCell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

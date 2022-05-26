@@ -63,17 +63,42 @@ class WriteCommentViewController: UIViewController {
         }
     }
 
+    func checkBlank() -> Bool {
+        // 공백만 있는지 확인?
+        let regex = "\\S"
+        guard let nickName = nickNameTextField.text else { return false }
+        let isNickNameHasOnlySpace = !(nickName.trimmingCharacters(in: .whitespaces).range(of: regex, options: .regularExpression) != nil)
+        let isContentHasOnlySpace = !(contentTextView.text.trimmingCharacters(in: .whitespaces).range(of: regex, options: .regularExpression) != nil)
+
+        if (nickNameTextField.text == nil) || (nickNameTextField.text == "") || isNickNameHasOnlySpace {
+            return false
+        }
+        if (contentTextView.text == nil) || (contentTextView.text == "") || (contentTextView.text == "한줄평을 작성해주세요") || isContentHasOnlySpace {
+            return false
+        }
+
+        return true
+    }
+
     @IBAction func touchUpCancelButton (_ sender: UIButton) {
         self.dismiss(animated: true)
     }
 
     @IBAction func touchUpCompleteButton(_ sender: UIButton) {
         let rating = Double(starRatingSlider.value)
-        guard let writer = nickNameTextField.text else { return }
+        guard let writer = nickNameTextField.text?.trimmingCharacters(in: .whitespaces) else { return }
         let movieId = movieDetailInformation.movieId
-        guard let contents = contentTextView.text else { return }
-        requestPostComment(rating: rating, writer: writer, movieId: movieId, contents: contents)
-        self.dismiss(animated: true)
+        guard var contents = contentTextView.text else { return }
+        contents = contents.trimmingCharacters(in: .whitespaces)
+        if checkBlank() {
+            requestPostComment(rating: rating, writer: writer, movieId: movieId, contents: contents)
+            self.dismiss(animated: true)
+        } else {
+            let alertController = UIAlertController(title: "닉네임과 한줄평을 모두 작성해주세요", message: "", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alertController.addAction(okAction)
+            present(alertController, animated: true)
+        }
     }
 
     @IBAction func onDragStarRatingSlider(_ sender: UISlider) {
