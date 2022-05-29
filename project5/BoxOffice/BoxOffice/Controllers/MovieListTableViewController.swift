@@ -26,7 +26,12 @@ class MovieListTableViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        requestMovieList(UserInformation.shared.orderType)
+        if !requestMovieList(UserInformation.shared.orderType) {
+            let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default)
+            alertController.addAction(okAction)
+            present(alertController, animated: true)
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -39,10 +44,17 @@ class MovieListTableViewController: UIViewController {
 
     func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
         let handler = { (action: UIAlertAction) in
-            requestMovieList(orderType)
-            UserInformation.shared.orderType = orderType
-            DispatchQueue.main.async {
-                self.movieListTableView.reloadData()
+            if !requestMovieList(UserInformation.shared.orderType) {
+                let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true)
+            } else {
+                UserInformation.shared.orderType = orderType
+                DispatchQueue.main.async {
+                    self.movieListTableView
+                        .reloadData()
+                }
             }
         }
         return handler

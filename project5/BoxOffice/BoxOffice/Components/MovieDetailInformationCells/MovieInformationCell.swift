@@ -16,4 +16,9 @@ class MovieInformationCell: UITableViewCell {
     @IBOutlet weak var reservationRate: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var numberOfAudience: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layoutIfNeeded()
+    }
 }

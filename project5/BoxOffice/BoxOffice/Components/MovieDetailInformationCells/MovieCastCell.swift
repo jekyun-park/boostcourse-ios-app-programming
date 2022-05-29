@@ -10,4 +10,8 @@ import UIKit
 class MovieCastCell: UITableViewCell {
     @IBOutlet weak var directorLabel: UILabel!
     @IBOutlet weak var actorLabel: UILabel!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layoutIfNeeded()
+    }
 }

@@ -21,8 +21,6 @@ class WriteCommentViewController: UIViewController {
 
     var movieDetailInformation: MovieDetailInformation!
 
-
-
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,8 +88,14 @@ class WriteCommentViewController: UIViewController {
         let movieId = movieDetailInformation.movieId
         guard var contents = contentTextView.text else { return }
         contents = contents.trimmingCharacters(in: .whitespaces)
+        
         if checkBlank() {
-            requestPostComment(rating: rating, writer: writer, movieId: movieId, contents: contents)
+            if !requestPostComment(rating: rating, writer: writer, movieId: movieId, contents: contents) {
+                let alertController = UIAlertController(title: "네트워크 오류", message: "네트워크 오류로 한줄평을 작성하지 못했습니다. 다시 시도해주세요", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK", style: .default)
+                alertController.addAction(okAction)
+                present(alertController, animated: true)
+            }
             self.dismiss(animated: true)
         } else {
             let alertController = UIAlertController(title: "닉네임과 한줄평을 모두 작성해주세요", message: "", preferredStyle: .alert)
