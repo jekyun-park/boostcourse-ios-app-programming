@@ -24,15 +24,11 @@ class MovieListCollectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieListNotification(_:)), name: DidReceiveMovieListNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if !requestMovieList(UserInformation.shared.orderType) {
-            let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alertController.addAction(okAction)
-            present(alertController, animated: true)
-        }
+        requestMovieList(UserInformation.shared.orderType)
     }
 
 
@@ -40,16 +36,10 @@ class MovieListCollectionViewController: UIViewController {
 
     func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
         let handler = { (action: UIAlertAction) in
-            if !requestMovieList(UserInformation.shared.orderType) {
-                let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default)
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true)
-            } else {
-                UserInformation.shared.orderType = orderType
-                DispatchQueue.main.async {
-                    self.movieListCollectionView.reloadData()
-                }
+            requestMovieList(UserInformation.shared.orderType)
+            UserInformation.shared.orderType = orderType
+            DispatchQueue.main.async {
+                self.movieListCollectionView.reloadData()
             }
         }
         return handler
@@ -67,7 +57,18 @@ class MovieListCollectionViewController: UIViewController {
 
         self.present(orderAlertController, animated: true, completion: nil)
     }
-
+    
+    @objc func didReceiveDataReceivingErrorNotification(_ notification:Notification) {
+        guard let error = notification.userInfo?["dataReceivingError"] as? Error else { return }
+        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
+            guard let navigationController = self.navigationController else { return }
+            navigationController.popViewController(animated: true)
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+        
+    }
 
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
@@ -81,7 +82,7 @@ class MovieListCollectionViewController: UIViewController {
             self.navigationItem.title = self.orderTitle
         }
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let movieInformationViewController = segue.destination as? MovieInformationViewController else { return }
         guard let movieListCollectionViewCell = sender as? MovieListCollectionViewCell else { return }
@@ -101,17 +102,17 @@ extension MovieListCollectionViewController: UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         guard let movieListCollectionViewCell: MovieListCollectionViewCell = movieListCollectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? MovieListCollectionViewCell else { return UICollectionViewCell() }
-        
+
         let movie = self.movies[indexPath.item]
-        
+
         movieListCollectionViewCell.date.text = "개봉일 : " + movie.date
-        
+
         movieListCollectionViewCell.title.text = movie.title
         movieListCollectionViewCell.title.adjustsFontSizeToFitWidth = true
         movieListCollectionViewCell.title.preferredMaxLayoutWidth = UIScreen.main.bounds.width
         movieListCollectionViewCell.title.sizeToFit()
         movieListCollectionViewCell.title.layoutIfNeeded()
-        
+
         movieListCollectionViewCell.reservationInformation.text = "\(movie.reservationGrade)위(\(movie.userRating)) / \(movie.reservationRate)%"
         movieListCollectionViewCell.posterImageView.image = nil
         movieListCollectionViewCell.ageImageView.image = nil

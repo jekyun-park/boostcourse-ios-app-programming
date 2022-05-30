@@ -23,15 +23,11 @@ class MovieListTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieListNotification(_:)), name: DidReceiveMovieListNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if !requestMovieList(UserInformation.shared.orderType) {
-            let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alertController.addAction(okAction)
-            present(alertController, animated: true)
-        }
+        requestMovieList(UserInformation.shared.orderType)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -44,17 +40,11 @@ class MovieListTableViewController: UIViewController {
 
     func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
         let handler = { (action: UIAlertAction) in
-            if !requestMovieList(UserInformation.shared.orderType) {
-                let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "OK", style: .default)
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true)
-            } else {
-                UserInformation.shared.orderType = orderType
-                DispatchQueue.main.async {
-                    self.movieListTableView
-                        .reloadData()
-                }
+            requestMovieList(orderType)
+            UserInformation.shared.orderType = orderType
+            DispatchQueue.main.async {
+                self.movieListTableView
+                    .reloadData()
             }
         }
         return handler
@@ -73,7 +63,18 @@ class MovieListTableViewController: UIViewController {
 
         self.present(orderAlertController, animated: true, completion: nil)
     }
-
+    
+    @objc func didReceiveDataReceivingErrorNotification(_ notification:Notification) {
+        guard let error = notification.userInfo?["dataReceivingError"] as? Error else { return }
+        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
+            guard let navigationController = self.navigationController else { return }
+            navigationController.popViewController(animated: true)
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+    }
+    
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
         guard let orderTypeString = notification.userInfo?["orderType"] as? String else { return }
@@ -85,7 +86,6 @@ class MovieListTableViewController: UIViewController {
             self.movieListTableView.reloadData()
             self.navigationItem.title = self.orderTitle
         }
-
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,9 +94,6 @@ class MovieListTableViewController: UIViewController {
         guard let index = movieListTableView.indexPath(for: movieListTableViewCell) else { return }
         movieInformationViewController.movieId = movies[index.row].movieId
     }
-
-
-
 }
 
 // MARK: - Table View

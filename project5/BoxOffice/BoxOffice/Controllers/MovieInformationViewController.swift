@@ -22,21 +22,12 @@ class MovieInformationViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieDetailInformationNotification(_:)), name: DidReceiveMovieDetailInformationNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieComments(_:)), name: DidReceiveMovieCommentsNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        if !requestMovieDetailInformation(movieId) {
-            let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alertController.addAction(okAction)
-            present(alertController, animated: true)
-        }
-        if !requestMovieCommentsList(movieId) {
-            let alertController = UIAlertController(title: "데이터 수신에 실패했습니다.", message: "다시 시도해주세요", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default)
-            alertController.addAction(okAction)
-            present(alertController, animated: true)
-        }
+        requestMovieDetailInformation(movieId)
+        requestMovieCommentsList(movieId)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -59,7 +50,18 @@ class MovieInformationViewController: UIViewController {
         navigationBarTopItem.title = movieDetailInformation.title
         navigationBarBackItem.title = "영화목록"
     }
-
+    
+    @objc func didReceiveDataReceivingErrorNotification(_ notification:Notification) {
+        guard let error = notification.userInfo?["dataReceivingError"] as? Error else { return }
+        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
+            guard let navigationController = self.navigationController else { return }
+            navigationController.popViewController(animated: true)
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+    }
+    
     @objc func didReceiveMovieDetailInformationNotification(_ notification: Notification) {
 
         guard let movieDetailInformation: MovieDetailInformation = notification.userInfo?["movieDetailInformation"] as? MovieDetailInformation else { return }
@@ -77,7 +79,7 @@ class MovieInformationViewController: UIViewController {
 
         guard let movieComments: Comments = notification.userInfo?["comments"] as? Comments else { return }
         self.comments = movieComments.comments
-        
+
         DispatchQueue.main.async {
             self.movieInformationTableView.reloadData()
         }
@@ -98,7 +100,7 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
         guard let movieDetailInformation = movieDetailInformation else { return UITableViewCell() }
 
         switch indexPath.row {
-            
+
         case 0:
 
             guard let movieInformationCell: MovieInformationCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "movieInformationCell") as? MovieInformationCell else { return UITableViewCell() }
@@ -144,28 +146,28 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
             }
 
             return movieInformationCell
-            
+
         case 1:
-            
+
             guard let movieSummaryCell: MovieSummaryCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "movieSummaryCell") as? MovieSummaryCell else { return UITableViewCell() }
-            
+
             movieSummaryCell.summaryText.text = movieDetailInformation.synopsis
-            
+
             return movieSummaryCell
-        
+
         case 2:
-            
+
             guard let movieCastCell: MovieCastCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "movieCastCell") as? MovieCastCell else { return UITableViewCell() }
 
             movieCastCell.directorLabel.text = movieDetailInformation.director
             movieCastCell.actorLabel.text = movieDetailInformation.actor
-            
+
             return movieCastCell
-            
+
         case 3:
-            
+
             guard let reviewLabelCell: ReviewLabelCell = movieInformationTableView.dequeueReusableCell(withIdentifier: "reviewLabelCell") as? ReviewLabelCell else { return UITableViewCell() }
-            
+
             return reviewLabelCell
 
         default:
@@ -192,7 +194,7 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
                     }
                 }
             }
-            
+
             return movieReviewCell
         }
     }
