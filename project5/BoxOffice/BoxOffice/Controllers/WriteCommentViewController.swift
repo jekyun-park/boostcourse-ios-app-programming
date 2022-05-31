@@ -99,7 +99,7 @@ class WriteCommentViewController: UIViewController {
             present(alertController, animated: true)
         }
     }
-    
+
     @IBAction func onDragStarRatingSlider(_ sender: UISlider) {
         let floatValue = floor(sender.value * 10) / 10
         let intValue = Int(floor(sender.value))
@@ -119,10 +119,10 @@ class WriteCommentViewController: UIViewController {
         }
         self.rating.text = String(Int(floatValue))
     }
-    
-    @objc func didReceiveCommentPostErrorNotification(_ notification:Notification) {
+
+    @objc func didReceiveCommentPostErrorNotification(_ notification: Notification) {
         guard let error = notification.userInfo?["commentPostError"] as? Error else { return }
-        let alertController = UIAlertController(title: "한줄평 작성에 실패하였습니다.", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "한줄평 작성에 실패하였습니다.", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다." + "\n \(error.localizedDescription)", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
         alertController.addAction(okAction)
         present(alertController, animated: true)

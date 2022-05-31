@@ -24,6 +24,7 @@ class MovieListTableViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieListNotification(_:)), name: DidReceiveMovieListNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
+        configureRefreshControl()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +50,6 @@ class MovieListTableViewController: UIViewController {
         }
         return handler
     }
-
 
     @IBAction func showAlertController() {
         let orderAlertController: UIAlertController
@@ -133,3 +133,21 @@ extension MovieListTableViewController: UITableViewDelegate, UITableViewDataSour
 
 }
 
+// RefreshControl
+extension MovieListTableViewController {
+    
+    func configureRefreshControl() {
+        self.movieListTableView.refreshControl = UIRefreshControl()
+        guard let refreshControl = self.movieListTableView.refreshControl else { return }
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+    
+    @objc func handleRefreshControl() {
+        DispatchQueue.main.async {
+            self.movieListTableView.reloadData()
+            guard let refreshControl = self.movieListTableView.refreshControl else { return }
+            refreshControl.endRefreshing()
+        }
+    }
+    
+}

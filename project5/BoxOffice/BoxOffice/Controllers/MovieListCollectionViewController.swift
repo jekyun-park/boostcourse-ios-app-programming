@@ -25,6 +25,7 @@ class MovieListCollectionViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieListNotification(_:)), name: DidReceiveMovieListNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
+        configureRefreshControl()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -57,17 +58,17 @@ class MovieListCollectionViewController: UIViewController {
 
         self.present(orderAlertController, animated: true, completion: nil)
     }
-    
-    @objc func didReceiveDataReceivingErrorNotification(_ notification:Notification) {
+
+    @objc func didReceiveDataReceivingErrorNotification(_ notification: Notification) {
         guard let error = notification.userInfo?["dataReceivingError"] as? Error else { return }
-        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다." + "\n \(error.localizedDescription)", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
             guard let navigationController = self.navigationController else { return }
             navigationController.popViewController(animated: true)
         }
         alertController.addAction(okAction)
         present(alertController, animated: true)
-        
+
     }
 
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
@@ -147,5 +148,22 @@ extension MovieListCollectionViewController: UICollectionViewDelegateFlowLayout 
         let width: CGFloat = collectionView.frame.size.width - (flowLayout.minimumLineSpacing)
 
         return CGSize(width: CGFloat(Int(width / numberOfCells)), height: CGFloat(Int(width * 0.9)))
+    }
+}
+
+// MARK: - RefreshControl
+extension MovieListCollectionViewController {
+    func configureRefreshControl() {
+        self.movieListCollectionView.refreshControl = UIRefreshControl()
+        guard let refreshControl = self.movieListCollectionView.refreshControl else { return }
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+    }
+
+    @objc func handleRefreshControl() {
+        DispatchQueue.main.async {
+            self.movieListCollectionView.reloadData()
+            guard let refreshControl = self.movieListCollectionView.refreshControl else { return }
+            refreshControl.endRefreshing()
+        }
     }
 }
