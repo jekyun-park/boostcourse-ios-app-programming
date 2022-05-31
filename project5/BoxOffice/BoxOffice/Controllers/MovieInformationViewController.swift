@@ -36,8 +36,16 @@ class MovieInformationViewController: UIViewController {
 //        print(comments)
     }
 
-// MARK: - functions & Methods
-
+// MARK: - Functions
+    
+    @IBAction func didTapImageView(_ sender: UITapGestureRecognizer) {
+//        print("tapped",sender)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "PosterImageViewController") as? PosterImageViewController else { return }
+        destinationViewController.posterImageURLString = self.movieDetailInformation?.posterImageURL
+        navigationController?.pushViewController(destinationViewController, animated: true)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let writeCommentViewController = segue.destination as? WriteCommentViewController else { return }
         writeCommentViewController.movieDetailInformation = self.movieDetailInformation

@@ -33,7 +33,7 @@ class MovieListCollectionViewController: UIViewController {
     }
 
 
-// MARK: - IBActions & Methods
+// MARK: - Functions
 
     func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
         let handler = { (action: UIAlertAction) in

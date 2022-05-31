@@ -121,6 +121,35 @@
             </objects>
             <point key="canvasLocation" x="1555.072463768116" y="-252.45535714285714"/>
         </scene>
+        <!--Poster Image View Controller-->
+        <scene sceneID="DQE-Dd-hc2">
+            <objects>
+                <viewController storyboardIdentifier="PosterImageViewController" id="eeJ-CF-Kan" customClass="PosterImageViewController" customModule="BoxOffice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mdF-b7-UeW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fjs-BR-MSh">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CIT-Ty-LXk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="CIT-Ty-LXk" firstAttribute="trailing" secondItem="fjs-BR-MSh" secondAttribute="trailing" id="3Xc-h2-aeq"/>
+                            <constraint firstItem="fjs-BR-MSh" firstAttribute="top" secondItem="CIT-Ty-LXk" secondAttribute="top" id="Me6-tR-TWR"/>
+                            <constraint firstItem="fjs-BR-MSh" firstAttribute="leading" secondItem="CIT-Ty-LXk" secondAttribute="leading" id="eTz-Ne-Jd2"/>
+                            <constraint firstItem="CIT-Ty-LXk" firstAttribute="bottom" secondItem="fjs-BR-MSh" secondAttribute="bottom" id="mAK-bj-Tlk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="posterImageView" destination="fjs-BR-MSh" id="f23-ee-00I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hec-rb-Tkj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2633" y="-604"/>
+        </scene>
         <!--Movie Information View Controller-->
         <scene sceneID="hxm-L1-mKZ">
             <objects>
@@ -141,11 +170,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="284"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L08-Yn-Ir0">
+                                                <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L08-Yn-Ir0">
                                                     <rect key="frame" x="4.9999999999999929" y="5" width="124.33333333333331" height="174"/>
+                                                    <gestureRecognizers/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="L08-Yn-Ir0" secondAttribute="height" multiplier="5:7" id="Aaf-r7-OQ7"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="k3u-cY-hTr" appends="YES" id="XoJ-dm-dwY"/>
+                                                    </connections>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="34W-WR-xAd">
                                                     <rect key="frame" x="134.33333333333334" y="92" width="0.0" height="0.0"/>
@@ -676,8 +709,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nxv-Fd-wG1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="k3u-cY-hTr">
+                    <connections>
+                        <action selector="didTapImageView:" destination="lLV-mh-Rtz" id="JdA-S9-x9s"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2630.434782608696" y="39.508928571428569"/>
+            <point key="canvasLocation" x="2649" y="196"/>
         </scene>
         <!--Movie List Collection View Controller-->
         <scene sceneID="zpK-jP-nKt">

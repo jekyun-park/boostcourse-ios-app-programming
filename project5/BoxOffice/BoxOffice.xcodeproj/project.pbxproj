@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2228795328184845002E338A /* MovieListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2228795228184845002E338A /* MovieListTableViewCell.swift */; };
+		224BC72128464B9C00122AEA /* PosterImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224BC72028464B9C00122AEA /* PosterImageViewController.swift */; };
 		224EB9B5282CF71700A88832 /* MovieInformationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9B4282CF71700A88832 /* MovieInformationCell.swift */; };
 		224EB9B7282CF74000A88832 /* MovieCastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9B6282CF74000A88832 /* MovieCastCell.swift */; };
 		224EB9B9282CF75C00A88832 /* MovieSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224EB9B8282CF75C00A88832 /* MovieSummaryCell.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		2228795228184845002E338A /* MovieListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListTableViewCell.swift; sourceTree = "<group>"; };
+		224BC72028464B9C00122AEA /* PosterImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterImageViewController.swift; sourceTree = "<group>"; };
 		224EB9B4282CF71700A88832 /* MovieInformationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInformationCell.swift; sourceTree = "<group>"; };
 		224EB9B6282CF74000A88832 /* MovieCastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCastCell.swift; sourceTree = "<group>"; };
 		224EB9B8282CF75C00A88832 /* MovieSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSummaryCell.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				22D99617280EF6FA00E02351 /* MovieInformationViewController.swift */,
 				22D99614280EF6A500E02351 /* MovieListCollectionViewController.swift */,
 				22D99619280EF72B00E02351 /* WriteCommentViewController.swift */,
+				224BC72028464B9C00122AEA /* PosterImageViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				224EB9B7282CF74000A88832 /* MovieCastCell.swift in Sources */,
+				224BC72128464B9C00122AEA /* PosterImageViewController.swift in Sources */,
 				22D99605280E939B00E02351 /* MovieListTableViewController.swift in Sources */,
 				224EB9BB282CF76900A88832 /* ReviewLabelCell.swift in Sources */,
 				22AA008C282A2AAB00CD9DC6 /* MovieListCollectionViewCell.swift in Sources */,

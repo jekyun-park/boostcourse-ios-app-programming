@@ -31,7 +31,7 @@ class WriteCommentViewController: UIViewController {
 
 
 
-// MARK: - IBActions & Functions & Methods
+// MARK: - Functions
 
     func loadTitleAndAgeGrade() {
         self.movieTitle.text = movieDetailInformation.title
