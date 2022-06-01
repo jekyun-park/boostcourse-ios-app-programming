@@ -11,6 +11,8 @@ class PosterImageViewController: UIViewController {
 
     // MARK: - Constants & IBOutlets
     @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var posterImageScrollView: UIScrollView!
+    
     var posterImageURLString: String?
 
 
@@ -19,6 +21,7 @@ class PosterImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         requestPosterImage()
+        setTapGestureRecognizer()
 //        print(posterImageURLString)
         // Do any additional setup after loading the view.
     }
@@ -32,7 +35,7 @@ class PosterImageViewController: UIViewController {
             guard let posterImageURLString = self.posterImageURLString else { return }
             guard let posterImageURL: URL = URL(string: posterImageURLString) else { return }
             guard let posterImageData = try? Data(contentsOf: posterImageURL) else { return }
-
+            
             DispatchQueue.main.async {
                 self.posterImageView.image = UIImage(data: posterImageData)
             }
@@ -41,4 +44,27 @@ class PosterImageViewController: UIViewController {
 
     }
 
+}
+
+extension PosterImageViewController: UIGestureRecognizerDelegate {
+    func setTapGestureRecognizer() {
+        let tapGestureRecognizer = UITapGestureRecognizer()
+        tapGestureRecognizer.addTarget(self, action: #selector(didTapPosterImageView))
+        self.posterImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func didTapPosterImageView() {
+        guard let navigationController = navigationController else { return }
+        guard let tabBarController = tabBarController else { return }
+        navigationController.navigationBar.isHidden.toggle()
+        tabBarController.tabBar.isHidden.toggle()
+    }
+    
+}
+
+extension PosterImageViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.posterImageView
+        
+    }
 }
