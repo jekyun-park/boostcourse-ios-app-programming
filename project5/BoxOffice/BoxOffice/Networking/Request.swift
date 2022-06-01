@@ -104,10 +104,6 @@ func requestMovieCommentsList(_ movieId: String) {
 }
 
 func requestPostComment(rating: Double, writer: String, movieId: String, contents: String) {
-    /*
-        한줄평 등록하기
-        해당 영화 id, 별점, 내용, 글쓴이를 묶어서 json 형식으로 Post
-     */
 
     let comment = PostComment(rating: rating, writer: writer, movieId: movieId, contents: contents)
 

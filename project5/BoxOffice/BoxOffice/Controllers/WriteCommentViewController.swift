@@ -62,7 +62,6 @@ class WriteCommentViewController: UIViewController {
     }
 
     func checkBlank() -> Bool {
-        // 공백만 있는지 확인?
         let regex = "\\S"
         guard let nickName = nickNameTextField.text else { return false }
         let isNickNameHasOnlySpace = !(nickName.trimmingCharacters(in: .whitespaces).range(of: regex, options: .regularExpression) != nil)
@@ -74,7 +73,6 @@ class WriteCommentViewController: UIViewController {
         if (contentTextView.text == nil) || (contentTextView.text == "") || (contentTextView.text == "한줄평을 작성해주세요") || isContentHasOnlySpace {
             return false
         }
-
         return true
     }
 
@@ -130,6 +128,7 @@ class WriteCommentViewController: UIViewController {
 }
 
 
+// MARK: - Text View 
 extension WriteCommentViewController: UITextViewDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {

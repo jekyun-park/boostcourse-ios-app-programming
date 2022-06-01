@@ -30,22 +30,15 @@ class MovieInformationViewController: UIViewController {
         requestMovieCommentsList(movieId)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-//        print(movieDetailInformation)
-//        printContent(movieDetailInformation)
-//        print(comments)
-    }
-
 // MARK: - Functions
-    
+
     @IBAction func didTapImageView(_ sender: UITapGestureRecognizer) {
-//        print("tapped",sender)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let destinationViewController = storyboard.instantiateViewController(withIdentifier: "PosterImageViewController") as? PosterImageViewController else { return }
         destinationViewController.posterImageURLString = self.movieDetailInformation?.posterImageURL
         navigationController?.pushViewController(destinationViewController, animated: true)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let writeCommentViewController = segue.destination as? WriteCommentViewController else { return }
         writeCommentViewController.movieDetailInformation = self.movieDetailInformation
@@ -58,10 +51,10 @@ class MovieInformationViewController: UIViewController {
         navigationBarTopItem.title = movieDetailInformation.title
         navigationBarBackItem.title = "영화목록"
     }
-    
-    @objc func didReceiveDataReceivingErrorNotification(_ notification:Notification) {
+
+    @objc func didReceiveDataReceivingErrorNotification(_ notification: Notification) {
         guard let error = notification.userInfo?["dataReceivingError"] as? Error else { return }
-        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다." + "\n \(error.localizedDescription)", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
             guard let navigationController = self.navigationController else { return }
             navigationController.popViewController(animated: true)
@@ -69,7 +62,7 @@ class MovieInformationViewController: UIViewController {
         alertController.addAction(okAction)
         present(alertController, animated: true)
     }
-    
+
     @objc func didReceiveMovieDetailInformationNotification(_ notification: Notification) {
 
         guard let movieDetailInformation: MovieDetailInformation = notification.userInfo?["movieDetailInformation"] as? MovieDetailInformation else { return }
@@ -77,7 +70,6 @@ class MovieInformationViewController: UIViewController {
         self.movieDetailInformation = movieDetailInformation
 
         DispatchQueue.main.async {
-            // UI setting
             self.movieInformationTableView.reloadData()
             self.setUpNavigationItemTitles()
         }
@@ -206,8 +198,4 @@ extension MovieInformationViewController: UITableViewDelegate, UITableViewDataSo
             return movieReviewCell
         }
     }
-
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
 }

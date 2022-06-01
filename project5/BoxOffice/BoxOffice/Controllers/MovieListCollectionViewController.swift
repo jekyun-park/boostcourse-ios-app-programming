@@ -152,6 +152,7 @@ extension MovieListCollectionViewController: UICollectionViewDelegateFlowLayout 
 }
 
 // MARK: - RefreshControl
+
 extension MovieListCollectionViewController {
     func configureRefreshControl() {
         self.movieListCollectionView.refreshControl = UIRefreshControl()

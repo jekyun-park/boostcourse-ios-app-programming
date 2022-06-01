@@ -31,12 +31,6 @@ class MovieListTableViewController: UIViewController {
         requestMovieList(UserInformation.shared.orderType)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        // printing logs
-//         requestMovieList(0)
-//         print(self.movies)
-    }
-
     // MARK: - Functions
 
     func handleRequests(_ orderType: Int) -> ((UIAlertAction) -> ()) {
@@ -63,10 +57,10 @@ class MovieListTableViewController: UIViewController {
 
         self.present(orderAlertController, animated: true, completion: nil)
     }
-    
-    @objc func didReceiveDataReceivingErrorNotification(_ notification:Notification) {
+
+    @objc func didReceiveDataReceivingErrorNotification(_ notification: Notification) {
         guard let error = notification.userInfo?["dataReceivingError"] as? Error else { return }
-        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다."+"\n \(error.localizedDescription)", preferredStyle: .alert)
+        let alertController = UIAlertController(title: "데이터 수신 에러", message: "다시 시도해 주세요, 에러 메시지는 아래와 같습니다." + "\n \(error.localizedDescription)", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default) { UIAlertAction in
             guard let navigationController = self.navigationController else { return }
             navigationController.popViewController(animated: true)
@@ -74,7 +68,7 @@ class MovieListTableViewController: UIViewController {
         alertController.addAction(okAction)
         present(alertController, animated: true)
     }
-    
+
     @objc func didReceiveMovieListNotification(_ notification: Notification) {
         guard let movieList: [Movie] = notification.userInfo?["movieList"] as? [Movie] else { return }
         guard let orderTypeString = notification.userInfo?["orderType"] as? String else { return }
@@ -133,15 +127,15 @@ extension MovieListTableViewController: UITableViewDelegate, UITableViewDataSour
 
 }
 
-// RefreshControl
+// MARK: - RefreshControl
 extension MovieListTableViewController {
-    
+
     func configureRefreshControl() {
         self.movieListTableView.refreshControl = UIRefreshControl()
         guard let refreshControl = self.movieListTableView.refreshControl else { return }
         refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
     }
-    
+
     @objc func handleRefreshControl() {
         DispatchQueue.main.async {
             self.movieListTableView.reloadData()
@@ -149,5 +143,5 @@ extension MovieListTableViewController {
             refreshControl.endRefreshing()
         }
     }
-    
+
 }
