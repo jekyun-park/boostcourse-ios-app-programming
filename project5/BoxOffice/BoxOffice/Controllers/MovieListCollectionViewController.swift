@@ -26,9 +26,6 @@ class MovieListCollectionViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieListNotification(_:)), name: DidReceiveMovieListNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
         configureRefreshControl()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
         requestMovieList(UserInformation.shared.orderType)
     }
 
@@ -88,7 +85,7 @@ class MovieListCollectionViewController: UIViewController {
         guard let movieInformationViewController = segue.destination as? MovieInformationViewController else { return }
         guard let movieListCollectionViewCell = sender as? MovieListCollectionViewCell else { return }
         guard let index = movieListCollectionView.indexPath(for: movieListCollectionViewCell) else { return }
-        movieInformationViewController.movieId = movies[index.row].movieId
+        movieInformationViewController.movieID = movies[index.row].movieId
     }
 }
 

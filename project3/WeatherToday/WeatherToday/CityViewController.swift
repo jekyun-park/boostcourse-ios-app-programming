@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class CityViewController: UIViewController {
 
     @IBOutlet weak var cityTableView: UITableView!

@@ -12,7 +12,7 @@ class MovieInformationViewController: UIViewController {
 
 // MARK: - IBOutlet & Constants & Variables
     @IBOutlet weak var movieInformationTableView: UITableView!
-    var movieId: String = ""
+    var movieID: String = ""
     var movieDetailInformation: MovieDetailInformation? = nil
     var comments: [Comment] = []
 
@@ -23,11 +23,8 @@ class MovieInformationViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieDetailInformationNotification(_:)), name: DidReceiveMovieDetailInformationNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMovieComments(_:)), name: DidReceiveMovieCommentsNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveDataReceivingErrorNotification(_:)), name: DidReceiveDataReceivingError, object: nil)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        requestMovieDetailInformation(movieId)
-        requestMovieCommentsList(movieId)
+        requestMovieDetailInformation(movieID)
+        requestMovieCommentsList(movieID)
     }
 
 // MARK: - Functions

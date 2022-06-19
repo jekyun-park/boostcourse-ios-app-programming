@@ -5,15 +5,6 @@
 //  Created by 박제균 on 2022/01/26.
 //
 
-/* {
- "city_name":"베를린",
- "state":12,
- "celsius":10.8,
- "rainfall_probability":60
- },
- */
-
-import Foundation
 import UIKit
 
 // MARK: - 도시 정보

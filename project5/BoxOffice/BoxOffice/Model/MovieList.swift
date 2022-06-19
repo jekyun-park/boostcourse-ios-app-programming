@@ -8,9 +8,16 @@
 import Foundation
 
 struct MovieList: Codable, CustomStringConvertible {
-    
-    let orderType: Int
+
+    enum OrderType: Int {
+        case reservationRate = 0
+        case curation = 1
+        case releaseDate = 2
+    }
+
+    let orderType: OrderType.RawValue
     let movies: [Movie]
+
     var description: String {
         switch self.orderType {
         case 0:
@@ -23,7 +30,7 @@ struct MovieList: Codable, CustomStringConvertible {
             return ""
         }
     }
-     
+
 
     enum CodingKeys: String, CodingKey {
         case orderType = "order_type"
@@ -33,7 +40,7 @@ struct MovieList: Codable, CustomStringConvertible {
 }
 
 struct Movie: Codable, CustomStringConvertible {
-    
+
     let grade: Int
     let thumb: String
     let reservationGrade: Int

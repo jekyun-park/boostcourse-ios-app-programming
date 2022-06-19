@@ -129,7 +129,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="PvW-tu-p6t">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="PvW-tu-p6t">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fjs-BR-MSh">
@@ -137,11 +137,13 @@
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="trailing" secondItem="wAG-kn-QpA" secondAttribute="trailing" id="5jL-06-aZa"/>
-                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="top" secondItem="wAG-kn-QpA" secondAttribute="top" id="FKs-v5-Sva"/>
-                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="leading" secondItem="wAG-kn-QpA" secondAttribute="leading" id="HAJ-rD-53d"/>
-                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="bottom" secondItem="wAG-kn-QpA" secondAttribute="bottom" id="Pk6-d5-q5k"/>
+                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="top" secondItem="L3o-gY-rgk" secondAttribute="top" id="184-9Z-IVJ"/>
+                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="trailing" secondItem="L3o-gY-rgk" secondAttribute="trailing" id="JIw-TK-HM2"/>
+                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="height" secondItem="wAG-kn-QpA" secondAttribute="height" id="LeO-od-7MQ"/>
+                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="width" secondItem="wAG-kn-QpA" secondAttribute="width" id="MZe-ic-f1K"/>
+                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="leading" secondItem="L3o-gY-rgk" secondAttribute="leading" id="Nms-ZL-7I6"/>
                                     <constraint firstItem="fjs-BR-MSh" firstAttribute="height" secondItem="PvW-tu-p6t" secondAttribute="height" id="VjO-YP-aN2"/>
+                                    <constraint firstItem="fjs-BR-MSh" firstAttribute="bottom" secondItem="L3o-gY-rgk" secondAttribute="bottom" id="ZwG-pb-QxL"/>
                                     <constraint firstItem="fjs-BR-MSh" firstAttribute="width" secondItem="PvW-tu-p6t" secondAttribute="width" id="lPS-WR-gB0"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="L3o-gY-rgk"/>

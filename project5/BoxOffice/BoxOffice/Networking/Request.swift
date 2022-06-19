@@ -15,7 +15,13 @@ let DidReceiveDataReceivingError: Notification.Name = Notification.Name("didRece
 let DidReceiveCommentPostError: Notification.Name = Notification.Name("didReceiveCommentPostError")
 
 
-func requestMovieList(_ orderType: Int) {
+enum OrderType: Int {
+    case reservationRate = 0
+    case curation = 1
+    case releaseDate = 2
+}
+
+func requestMovieList(_ orderType: OrderType.RawValue) {
 
     guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=\(orderType)") else { return }
 
@@ -99,7 +105,7 @@ func requestMovieCommentsList(_ movieId: String) {
             NotificationCenter.default.post(name: DidReceiveDataReceivingError, object: nil, userInfo: ["dataReceivingError": error])
         }
     }
-    
+
     dataTask.resume()
 }
 
@@ -109,9 +115,9 @@ func requestPostComment(rating: Double, writer: String, movieId: String, content
 
     let session: URLSession = URLSession(configuration: .default)
 
-    guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/comment") else { return  }
+    guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/comment") else { return }
 
-    guard let dataToUpload = try? JSONEncoder().encode(comment) else { print("Encoding failed"); return  }
+    guard let dataToUpload = try? JSONEncoder().encode(comment) else { print("Encoding failed"); return }
 
     var postRequest = URLRequest(url: url)
     postRequest.httpMethod = "POST"

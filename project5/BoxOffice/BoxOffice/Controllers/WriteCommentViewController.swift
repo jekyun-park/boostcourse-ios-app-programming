@@ -30,7 +30,6 @@ class WriteCommentViewController: UIViewController {
     }
 
 
-
 // MARK: - Functions
 
     func loadTitleAndAgeGrade() {
@@ -83,7 +82,7 @@ class WriteCommentViewController: UIViewController {
     @IBAction func touchUpCompleteButton(_ sender: UIButton) {
         let rating = Double(starRatingSlider.value)
         guard let writer = nickNameTextField.text?.trimmingCharacters(in: .whitespaces) else { return }
-        let movieId = movieDetailInformation.movieId
+        let movieId = movieDetailInformation.movieID
         guard var contents = contentTextView.text else { return }
         contents = contents.trimmingCharacters(in: .whitespaces)
 

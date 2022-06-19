@@ -26,7 +26,7 @@ struct MovieDetailInformation: Codable {
     let reservationRate: Double
     let userRating: Double
     let date: String
-    let movieId: String
+    let movieID: String
 
     var ageIconString: String {
         switch self.grade {
@@ -57,7 +57,7 @@ struct MovieDetailInformation: Codable {
         case reservationRate = "reservation_rate"
         case userRating = "user_rating"
         case date
-        case movieId = "id"
+        case movieID = "id"
     }
 
 }
