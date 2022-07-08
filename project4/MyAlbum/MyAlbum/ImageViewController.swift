@@ -110,12 +110,13 @@ extension ImageViewController: PHPhotoLibraryChangeObserver {
 
     func photoLibraryDidChange(_ changeInstance: PHChange) {
 
-        guard let assetChange = changeInstance.changeDetails(for: asset), let updatedAsset = assetChange.objectAfterChanges else { return }
-
         OperationQueue.main.addOperation {
+            guard let assetChange = changeInstance.changeDetails(for: self.asset) else { return }
+            guard let updatedAsset = assetChange.objectAfterChanges else { return }
             self.asset = updatedAsset
             self.setFavorite()
         }
+
     }
 
 }
@@ -129,13 +130,13 @@ extension ImageViewController: UIGestureRecognizerDelegate {
         tapGesture.addTarget(self, action: #selector(assetImageViewDidTap))
         self.assetImageView.addGestureRecognizer(tapGesture)
     }
-    
+
     @objc func assetImageViewDidTap() {
         guard let navigationController = navigationController else { return }
         navigationController.navigationBar.isHidden.toggle()
         navigationController.toolbar.isHidden.toggle()
     }
-    
+
 }
 
 // MARK: - ScrollView

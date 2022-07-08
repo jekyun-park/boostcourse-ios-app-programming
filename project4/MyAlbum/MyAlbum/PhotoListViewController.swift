@@ -49,10 +49,10 @@ class PhotoListViewController: UIViewController {
     @IBAction func touchUpSelectBarButtonItem() {
 
         let albumName = album.localizedTitle
-        
-        
+
+
         if !isSelectingMode {
-            
+
             photoCollectionView.allowsMultipleSelection = true
             selectBarButtonItem.title = "취소"
             navigationItem.title = "항목 선택"
@@ -62,7 +62,7 @@ class PhotoListViewController: UIViewController {
             }
 
         } else {
-            
+
             selectBarButtonItem.title = "선택"
             navigationItem.title = albumName
             activityBarButtonItem.isEnabled = false
@@ -81,7 +81,7 @@ class PhotoListViewController: UIViewController {
             }
             photoCollectionView.allowsMultipleSelection = false
         }
-        
+
         isSelectingMode.toggle()
         navigationItem.hidesBackButton.toggle()
         latestBarButtonItem.isEnabled.toggle()
@@ -176,32 +176,86 @@ class PhotoListViewController: UIViewController {
 // MARK: - PHPhotoLibraryChangeObserver
 
 extension PhotoListViewController: PHPhotoLibraryChangeObserver {
+    
+//    func photoLibraryDidChange(_ changeInstance: PHChange) {
+//        guard let collectionView = self.collectionView else { return }
+//        // Change notifications may be made on a background queue.
+//        // Re-dispatch to the main queue to update the UI.
+//        DispatchQueue.main.sync {
+//            // Check for changes to the displayed album itself
+//            // (its existence and metadata, not its member assets).
+//            if let albumChanges = changeInstance.changeDetails(for: assetCollection) {
+//                // Fetch the new album and update the UI accordingly.
+//                assetCollection = albumChanges.objectAfterChanges! as! PHAssetCollection
+//                navigationController?.navigationItem.title = assetCollection.localizedTitle
+//            }
+//            // Check for changes to the list of assets (insertions, deletions, moves, or updates).
+//            if let changes = changeInstance.changeDetails(for: fetchResult) {
+//                // Keep the new fetch result for future use.
+//                fetchResult = changes.fetchResultAfterChanges
+//                if changes.hasIncrementalChanges {
+//                    // If there are incremental diffs, animate them in the collection view.
+//                    collectionView.performBatchUpdates({
+//                        // For indexes to make sense, updates must be in this order:
+//                        // delete, insert, reload, move.
+//                        if let removed = changes.removedIndexes where removed.count > 0 {
+//                            collectionView.deleteItems(at: removed.map { IndexPath(item: $0, section:0) })
+//                        }
+//                        if let inserted = changes.insertedIndexes where inserted.count > 0 {
+//                            collectionView.insertItems(at: inserted.map { IndexPath(item: $0, section:0) })
+//                        }
+//                        if let changed = changes.changedIndexes where changed.count > 0 {
+//                            collectionView.reloadItems(at: changed.map { IndexPath(item: $0, section:0) })
+//                        }
+//                        changes.enumerateMoves { fromIndex, toIndex in
+//                            collectionView.moveItem(at: IndexPath(item: fromIndex, section: 0),
+//                                                    to: IndexPath(item: toIndex, section: 0))
+//                        }
+//                    })
+//                } else {
+//                    // Reload the collection view if incremental diffs aren't available.
+//                    collectionView.reloadData()
+//                }
+//            }
+//        }
+//    }
+
+    
     func photoLibraryDidChange(_ changeInstance: PHChange) {
 
-        guard let albumChanges = changeInstance.changeDetails(for: album) else { return }
-        guard let changes = changeInstance.changeDetails(for: self.fetchResult) else { return }
-
-        self.fetchResult = changes.fetchResultAfterChanges
-        self.album = albumChanges.objectAfterChanges
-
-        guard let insertedIndexes = changes.insertedIndexes else { return }
-        let insertedIndexPath = IndexPath(indexes: insertedIndexes).map { IndexPath(indexes: [0, $0]) }
-
         OperationQueue.main.addOperation {
-            self.photoCollectionView.insertItems(at: insertedIndexPath)
-            self.photoCollectionView.reloadData()
+            
+            if let albumChanges = changeInstance.changeDetails(for: self.album) {
+                self.album = albumChanges.objectAfterChanges!
+            }
+            
+            guard let albumChanges = changeInstance.changeDetails(for: self.album) else { return }
+            guard let changes = changeInstance.changeDetails(for: self.fetchResult) else { return }
+            
+            self.fetchResult = changes.fetchResultAfterChanges
+            self.album = albumChanges.objectAfterChanges
+
+            if changes.hasIncrementalChanges {
+                self.photoCollectionView.performBatchUpdates {
+                    if let removed = changes.removedIndexes, removed.count > 0 {
+                        self.photoCollectionView.deleteItems(at: removed.map { IndexPath(item: $0, section: 0)})
+                    }
+                    if let inserted = changes.insertedIndexes, inserted.count > 0 {
+                        self.photoCollectionView.insertItems(at: inserted.map { IndexPath(item: $0, section: 0)})
+                    }
+                    if let changed = changes.changedIndexes, changed.count > 0 {
+                        self.photoCollectionView.reloadItems(at: changed.map { IndexPath(item: $0, section: 0)})
+                    }
+                    changes.enumerateMoves { fromIndex, toIndex in
+                        self.photoCollectionView.moveItem(at: IndexPath(item: fromIndex, section: 0), to: IndexPath(item: toIndex, section: 0))
+                    }
+                }
+            } else {
+                self.photoCollectionView.reloadData()
+            }
         }
-
-        guard let removedIndexes = changes.removedIndexes else { return }
-        let removedIndexPath = IndexPath(indexes: removedIndexes).map { IndexPath(indexes: [0, $0]) }
-
-        OperationQueue.main.addOperation {
-            self.photoCollectionView.deleteItems(at: removedIndexPath)
-            self.photoCollectionView.reloadData()
-        }
-
     }
-    
+
 }
 
 
